@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=SDP Shield
+GenericName=VPN client front-end
+Comment=Unofficial graphical front-end for the Cato Networks Linux client
+Exec=sdp-shield
+Icon=sdp-shield
+Terminal=false
+Categories=Network;
+Keywords=VPN;SDP;SASE;Cato;
+StartupNotify=false

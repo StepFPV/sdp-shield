@@ -1,0 +1,23 @@
+# Builds a package from this source tree.
+# Usage: cd packaging/arch && makepkg -si
+pkgname=sdp-shield
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Unofficial graphical front-end for the Cato Networks Linux client"
+arch=('any')
+license=('MIT')
+depends=('python' 'pyside6')
+optdepends=('cato-client: the Cato client providing the cato-sdp command')
+source=()
+
+package() {
+    local src="$startdir/../.."
+    install -Dm755 "$src/sdp_shield.py"      "$pkgdir/usr/share/$pkgname/sdp_shield.py"
+    install -Dm644 "$src/sdp-shield.desktop" "$pkgdir/usr/share/applications/$pkgname.desktop"
+    install -Dm644 "$src/sdp-shield.svg"     "$pkgdir/usr/share/icons/hicolor/scalable/apps/$pkgname.svg"
+    install -Dm644 "$src/LICENSE"            "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -dm755 "$pkgdir/usr/bin"
+    printf '#!/bin/sh\nexec python3 /usr/share/%s/sdp_shield.py "$@"\n' "$pkgname" \
+        > "$pkgdir/usr/bin/$pkgname"
+    chmod 755 "$pkgdir/usr/bin/$pkgname"
+}

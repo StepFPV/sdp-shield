@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.log
+*.deb
+*.pkg.tar.*
+packaging/arch/pkg/
+packaging/arch/src/
+.venv/
