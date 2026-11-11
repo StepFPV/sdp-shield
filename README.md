@@ -46,7 +46,7 @@ The `cato-sdp` output format may change in future client versions.
 
 ```bash
 sudo pacman -S --needed python pyside6
-git clone <this-repository-url> sdp-shield
+git clone https://github.com/StepFPV/sdp-shield.git sdp-shield
 cd sdp-shield/packaging/arch
 makepkg -si
 ```
@@ -57,7 +57,7 @@ Tested on Debian 13 and Ubuntu 26.04 LTS, which package PySide6.
 
 ```bash
 sudo apt install git python3-pyside6.qtwidgets python3-pyside6.qtnetwork
-git clone <this-repository-url> sdp-shield
+git clone https://github.com/StepFPV/sdp-shield.git sdp-shield
 cd sdp-shield
 packaging/debian/build-deb.sh
 sudo apt install ./sdp-shield_*_all.deb
@@ -68,7 +68,7 @@ sudo apt install ./sdp-shield_*_all.deb
 Install PySide6 with your package manager, then:
 
 ```bash
-git clone <this-repository-url> sdp-shield
+git clone https://github.com/StepFPV/sdp-shield.git sdp-shield
 cd sdp-shield
 ./install.sh
 ```
@@ -84,7 +84,7 @@ and point the installer at it:
 sudo apt install git python3-venv
 python3 -m venv ~/.local/share/sdp-shield-venv
 ~/.local/share/sdp-shield-venv/bin/pip install PySide6
-git clone <this-repository-url> sdp-shield
+git clone https://github.com/StepFPV/sdp-shield.git sdp-shield
 cd sdp-shield
 PYTHON=~/.local/share/sdp-shield-venv/bin/python ./install.sh
 ```
