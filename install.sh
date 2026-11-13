@@ -8,10 +8,10 @@ cd "$(dirname "$0")"
 PREFIX="${PREFIX:-$HOME/.local}"
 PYTHON="$(command -v "${PYTHON:-python3}")" || { echo "Python 3 not found." >&2; exit 1; }
 
-"$PYTHON" -c 'import PySide6' 2>/dev/null || {
+"$PYTHON" -c 'import PySide6.QtSvg' 2>/dev/null || {
     echo "PySide6 is missing. Install it first:" >&2
     echo "  Arch:          sudo pacman -S pyside6" >&2
-    echo "  Debian/Ubuntu: sudo apt install python3-pyside6.qtwidgets python3-pyside6.qtnetwork" >&2
+    echo "  Debian/Ubuntu: sudo apt install python3-pyside6.qtwidgets python3-pyside6.qtnetwork python3-pyside6.qtsvg" >&2
     echo "  Or use a virtualenv: see 'Ubuntu 24.04 and older' in README.md" >&2
     exit 1
 }

@@ -22,7 +22,7 @@ Version: $VERSION
 Section: net
 Priority: optional
 Architecture: all
-Depends: python3, python3-pyside6.qtcore, python3-pyside6.qtgui, python3-pyside6.qtwidgets, python3-pyside6.qtnetwork
+Depends: python3, python3-pyside6.qtcore, python3-pyside6.qtgui, python3-pyside6.qtwidgets, python3-pyside6.qtnetwork, python3-pyside6.qtsvg
 Suggests: cato-client
 Maintainer: sdp-shield contributors <nobody@invalid>
 Description: Unofficial graphical front-end for the Cato Networks Linux client

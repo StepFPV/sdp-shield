@@ -3,8 +3,9 @@
 An unofficial graphical front-end for the **Cato Networks Linux client**.
 
 The Linux client is driven from the command line with `cato-sdp`. SDP Shield
-adds a small window and a system tray icon so you can see whether you are
-connected and connect or disconnect with one click.
+adds a dark, compact window and a system tray icon so you can see whether you
+are connected, connect or disconnect with one click, and check the details of
+the session.
 
 > **Disclaimer.** SDP Shield is an independent, community project. It is not
 > affiliated with, endorsed by, or supported by Cato Networks. "Cato" and
@@ -13,27 +14,50 @@ connected and connect or disconnect with one click.
 
 ## What it does
 
-- Shows the connection state: connected, connecting, disconnected, or daemon not running.
-- Connects and disconnects with the big button or from the tray menu.
-- Shows the connection time, PoP and tunnel IP when the client reports them.
-- Shows the raw `cato-sdp status` output on the Stats page.
-- Keeps running in the system tray when you close the window.
-- Runs as a single instance: starting it again brings the window to the front.
+- **Home**: connection state (connected, connecting, disconnected, daemon not
+  running) with a live timer, a shield button to connect or disconnect, and the
+  user, account and PoP reported by the client.
+- **Statistics**: data sent and received, packets, local and tunnel IP, PoP and
+  its address, latency, session start, DNS servers and the client version.
+- **Users**: keep a list of user/account pairs and pick the one to connect
+  with, optionally with a custom PoP server address. The user reported by the
+  client is added automatically. Editing is locked while connected.
+- **Settings**: start at login, connect when the app starts, Always-On
+  (reconnect when the tunnel drops on its own), and the `cato-sdp start`
+  options for systemd-resolved DNS, TCP-only transport and a split-tunnel
+  route. Connection options can be changed only while disconnected.
+  Desktop notifications can be switched on or off.
+- **Support**: record the client log while you reproduce an issue, or save all
+  client logs and the current status to a `.tar.gz` for your IT department.
+- **Feedback**: rate the experience and write a note. It is saved locally and
+  copied to the clipboard; it is not sent anywhere.
+- Frameless window with a collapsible sidebar, system tray icon, single
+  instance (starting it again brings the window to the front).
 
 ## What it does not do
 
 - It does **not** include, bundle or redistribute any Cato software.
-- It does **not** read, store or send credentials, certificates or configuration.
-- It opens **no** network connections. It only runs these local commands:
-  `cato-sdp status`, `cato-sdp start`, `cato-sdp stop`, `cato-sdp version`.
+- It does **not** read, store or send credentials or certificates. The log
+  archive never includes the client's credential files.
+- It does not contact any server of its own. It only runs these local
+  commands: `cato-sdp status`, `cato-sdp start` (with the options you chose),
+  `cato-sdp stop`, `cato-sdp version` and, for the log archive,
+  `journalctl -u cato-client`.
 - It does not run anything with root privileges.
+
+## Files
+
+- `~/.config/sdp-shield/settings.json` and `users.json`: your settings and the
+  user/account list (no passwords).
+- `~/.config/autostart/sdp-shield.desktop`: only when "Start at login" is on.
+- `~/.local/state/sdp-shield/`: crash log and saved feedback.
 
 ## Requirements
 
 - Linux with a desktop that supports a system tray (KDE Plasma, GNOME with the
   AppIndicator extension, Xfce, and others). Works on Wayland and X11.
 - Python 3.9 or newer.
-- PySide6 (Qt for Python).
+- PySide6 (Qt for Python), including the QtSvg module.
 - The Cato Networks Linux client, installed and set up as provided by your
   network administrator. SDP Shield expects the `cato-sdp` command in `PATH`.
 
@@ -56,7 +80,7 @@ makepkg -si
 Tested on Debian 13 and Ubuntu 26.04 LTS, which package PySide6.
 
 ```bash
-sudo apt install git python3-pyside6.qtwidgets python3-pyside6.qtnetwork
+sudo apt install git python3-pyside6.qtwidgets python3-pyside6.qtnetwork python3-pyside6.qtsvg
 git clone https://github.com/StepFPV/sdp-shield.git sdp-shield
 cd sdp-shield
 packaging/debian/build-deb.sh
@@ -93,11 +117,12 @@ PYTHON=~/.local/share/sdp-shield-venv/bin/python ./install.sh
 
 Start **SDP Shield** from the application menu, or run `sdp-shield`.
 
-- Click the round button in the middle to connect or disconnect.
+- Click the round button in the shield to connect or disconnect.
 - Right-click the tray icon for Connect, Show window and Quit.
-- Closing the window keeps the app in the tray. Use **Quit** to exit.
-
-To start it automatically at login, add it to your desktop's autostart settings.
+- The red dot hides the window to the tray, the yellow one minimises it.
+  Drag the window from any empty area. Use **Quit** in the tray menu to exit.
+- To start it automatically at login, tick **Start at login** in Settings.
+  `sdp-shield --hidden` starts it in the tray without opening the window.
 
 ## Troubleshooting
 
@@ -117,6 +142,10 @@ Log out and back in after changing groups.
 **No tray icon on GNOME.** Install and enable the AppIndicator extension.
 
 **Crash log.** Errors are written to `~/.local/state/sdp-shield/crash.log`.
+
+**Switching user.** When you pick a different user, SDP Shield passes
+`--user` and `--account` to `cato-sdp start`; the client then asks you to sign
+in for that user.
 
 ## Development
 

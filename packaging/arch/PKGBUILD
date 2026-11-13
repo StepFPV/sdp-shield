@@ -1,7 +1,7 @@
 # Builds a package from this source tree.
 # Usage: cd packaging/arch && makepkg -si
 pkgname=sdp-shield
-pkgver=1.0.0
+pkgver=2.0.0
 pkgrel=1
 pkgdesc="Unofficial graphical front-end for the Cato Networks Linux client"
 arch=('any')
